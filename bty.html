@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ragdoll Cat & Yarn 🐱🧶</title>
+<style>
+    body {
+        margin: 0;
+        background: linear-gradient(#fef6e4, #fde2e4);
+        overflow: hidden;
+        font-family: "Comic Sans MS", cursive;
+    }
+
+    h1 {
+        text-align: center;
+        color: #6d6875;
+        margin-top: 20px;
+    }
+
+    /* Cat */
+    .cat {
+        position: absolute;
+        bottom: 50px;
+        left: 50px;
+        width: 120px;
+        transition: left 0.1s linear;
+    }
+
+    /* Yarn */
+    .yarn {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background: pink;
+        border-radius: 50%;
+        box-shadow: inset -5px -5px 0 #ffb3c6;
+        animation: bounce 2s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-150px); }
+        100% { transform: translateY(0); }
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Ragdoll Cat Playing With Yarn 🐱🧶</h1>
+
+<img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" class="cat" id="cat">
+
+<div class="yarn" id="yarn"></div>
+
+<script>
+const cat = document.getElementById("cat");
+const yarn = document.getElementById("yarn");
+
+// Initial yarn position
+let yarnX = 300;
+let yarnY = 200;
+
+function moveYarn() {
+    yarnX = Math.random() * (window.innerWidth - 60);
+    yarnY = Math.random() * (window.innerHeight - 200);
+
+    yarn.style.left = yarnX + "px";
+    yarn.style.top = yarnY + "px";
+}
+
+// Cat follows yarn
+function chaseYarn() {
+    const catRect = cat.getBoundingClientRect();
+    const dx = yarnX - catRect.left;
+    
+    cat.style.left = (catRect.left + dx * 0.02) + "px";
+
+    requestAnimationFrame(chaseYarn);
+}
+
+// Move yarn every 2 seconds
+setInterval(moveYarn, 2000);
+
+moveYarn();
+chaseYarn();
+</script>
+
+</body>
+</html>
